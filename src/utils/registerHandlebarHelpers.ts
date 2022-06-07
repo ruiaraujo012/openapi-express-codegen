@@ -1,102 +1,111 @@
-import camelCase from 'camelcase';
-import Handlebars from 'handlebars/runtime';
+/* eslint-disable max-params */
+/* eslint-disable id-length */
 import { EOL } from 'os';
+import Handlebars from 'handlebars/runtime';
+import camelCase from 'camelcase';
 
+import { unique } from './unique';
 import type { Enum } from '../client/interfaces/Enum';
 import type { Model } from '../client/interfaces/Model';
-import { unique } from './unique';
 
 export const registerHandlebarHelpers = (root: { useUnionTypes: boolean }): void => {
-    Handlebars.registerHelper('ifdef', function (this: any, ...args): string {
-        const options = args.pop();
-        if (!args.every(value => !value)) {
-            return options.fn(this);
-        }
-        return options.inverse(this);
-    });
+  Handlebars.registerHelper('ifdef', function (this: any, ...args): string {
+    const options = args.pop();
 
-    Handlebars.registerHelper(
-        'equals',
-        function (this: any, a: string, b: string, options: Handlebars.HelperOptions): string {
-            return a === b ? options.fn(this) : options.inverse(this);
-        }
-    );
+    if (!args.every((value) => !value)) {
+      return options.fn(this);
+    }
 
-    Handlebars.registerHelper(
-        'notEquals',
-        function (this: any, a: string, b: string, options: Handlebars.HelperOptions): string {
-            return a !== b ? options.fn(this) : options.inverse(this);
-        }
-    );
+    return options.inverse(this);
+  });
 
-    Handlebars.registerHelper(
-        'containsSpaces',
-        function (this: any, value: string, options: Handlebars.HelperOptions): string {
-            return /\s+/.test(value) ? options.fn(this) : options.inverse(this);
-        }
-    );
+  Handlebars.registerHelper(
+    'equals',
+    function (this: any, a: string, b: string, options: Handlebars.HelperOptions): string {
+      return a === b ? options.fn(this) : options.inverse(this);
+    },
+  );
 
-    Handlebars.registerHelper(
-        'union',
-        function (this: any, properties: Model[], parent: string | undefined, options: Handlebars.HelperOptions) {
-            const type = Handlebars.partials['type'];
-            const types = properties.map(property => type({ ...root, ...property, parent }));
-            const uniqueTypes = types.filter(unique);
-            let uniqueTypesString = uniqueTypes.join(' | ');
-            if (uniqueTypes.length > 1) {
-                uniqueTypesString = `(${uniqueTypesString})`;
-            }
-            return options.fn(uniqueTypesString);
-        }
-    );
+  Handlebars.registerHelper(
+    'notEquals',
+    function (this: any, a: string, b: string, options: Handlebars.HelperOptions): string {
+      return a !== b ? options.fn(this) : options.inverse(this);
+    },
+  );
 
-    Handlebars.registerHelper(
-        'intersection',
-        function (this: any, properties: Model[], parent: string | undefined, options: Handlebars.HelperOptions) {
-            const type = Handlebars.partials['type'];
-            const types = properties.map(property => type({ ...root, ...property, parent }));
-            const uniqueTypes = types.filter(unique);
-            let uniqueTypesString = uniqueTypes.join(' & ');
-            if (uniqueTypes.length > 1) {
-                uniqueTypesString = `(${uniqueTypesString})`;
-            }
-            return options.fn(uniqueTypesString);
-        }
-    );
+  Handlebars.registerHelper(
+    'containsSpaces',
+    function (this: any, value: string, options: Handlebars.HelperOptions): string {
+      return /\s+/.test(value) ? options.fn(this) : options.inverse(this);
+    },
+  );
 
-    Handlebars.registerHelper(
-        'enumerator',
-        function (
-            this: any,
-            enumerators: Enum[],
-            parent: string | undefined,
-            name: string | undefined,
-            options: Handlebars.HelperOptions
-        ) {
-            if (!root.useUnionTypes && parent && name) {
-                return `${parent}.${name}`;
-            }
-            return options.fn(
-                enumerators
-                    .map(enumerator => enumerator.value)
-                    .filter(unique)
-                    .join(' | ')
-            );
-        }
-    );
+  Handlebars.registerHelper(
+    'union',
+    function (this: any, properties: Model[], parent: string | undefined, options: Handlebars.HelperOptions) {
+      const { type } = Handlebars.partials;
+      const types = properties.map((property) => type({ ...root, ...property, parent }));
+      const uniqueTypes = types.filter(unique);
+      let uniqueTypesString = uniqueTypes.join(' | ');
 
-    Handlebars.registerHelper('escapeComment', function (value: string): string {
-        return value
-            .replace(/\*\//g, '*')
-            .replace(/\/\*/g, '*')
-            .replace(/\r?\n(.*)/g, (_, w) => `${EOL} * ${w.trim()}`);
-    });
+      if (uniqueTypes.length > 1) {
+        uniqueTypesString = `(${uniqueTypesString})`;
+      }
 
-    Handlebars.registerHelper('escapeDescription', function (value: string): string {
-        return value.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\${/g, '\\${');
-    });
+      return options.fn(uniqueTypesString);
+    },
+  );
 
-    Handlebars.registerHelper('camelCase', function (value: string): string {
-        return camelCase(value);
-    });
+  Handlebars.registerHelper(
+    'intersection',
+    function (this: any, properties: Model[], parent: string | undefined, options: Handlebars.HelperOptions) {
+      const { type } = Handlebars.partials;
+      const types = properties.map((property) => type({ ...root, ...property, parent }));
+      const uniqueTypes = types.filter(unique);
+      let uniqueTypesString = uniqueTypes.join(' & ');
+
+      if (uniqueTypes.length > 1) {
+        uniqueTypesString = `(${uniqueTypesString})`;
+      }
+
+      return options.fn(uniqueTypesString);
+    },
+  );
+
+  Handlebars.registerHelper(
+    'enumerator',
+    function (
+      this: any,
+      enumerators: Enum[],
+      parent: string | undefined,
+      name: string | undefined,
+      options: Handlebars.HelperOptions,
+    ) {
+      if (!root.useUnionTypes && parent && name) {
+        return `${parent}.${name}`;
+      }
+
+      return options.fn(
+        enumerators
+          .map((enumerator) => enumerator.value)
+          .filter(unique)
+          .join(' | '),
+      );
+    },
+  );
+
+  Handlebars.registerHelper('escapeComment', function (value: string): string {
+    return value
+      .replace(/\*\//g, '*')
+      .replace(/\/\*/g, '*')
+      .replace(/\r?\n(.*)/g, (_, w) => `${EOL} * ${w.trim()}`);
+  });
+
+  Handlebars.registerHelper('escapeDescription', function (value: string): string {
+    return value.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\${/g, '\\${');
+  });
+
+  Handlebars.registerHelper('camelCase', function (value: string): string {
+    return camelCase(value);
+  });
 };

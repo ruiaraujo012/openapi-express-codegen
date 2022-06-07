@@ -1,7 +1,7 @@
-import type { Model } from '../client/interfaces/Model';
 import { postProcessModelEnum } from './postProcessModelEnum';
 import { postProcessModelEnums } from './postProcessModelEnums';
 import { postProcessModelImports } from './postProcessModelImports';
+import type { Model } from '../client/interfaces/Model';
 
 /**
  * Post processes the model.
@@ -9,10 +9,10 @@ import { postProcessModelImports } from './postProcessModelImports';
  * @param model
  */
 export const postProcessModel = (model: Model): Model => {
-    return {
-        ...model,
-        imports: postProcessModelImports(model),
-        enums: postProcessModelEnums(model),
-        enum: postProcessModelEnum(model),
-    };
+  return {
+    ...model,
+    enum: postProcessModelEnum(model),
+    enums: postProcessModelEnums(model),
+    imports: postProcessModelImports(model),
+  };
 };

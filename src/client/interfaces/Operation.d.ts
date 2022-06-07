@@ -3,14 +3,14 @@ import type { OperationParameters } from './OperationParameters';
 import type { OperationResponse } from './OperationResponse';
 
 export interface Operation extends OperationParameters {
-    interface: string;
-    name: string;
-    summary: string | null;
-    description: string | null;
-    deprecated: boolean;
-    method: string;
-    path: string;
-    errors: OperationError[];
-    results: OperationResponse[];
-    responseHeader: string | null;
+  interface: string;
+  name: string;
+  summary: string | null;
+  description: string | null;
+  deprecated: boolean;
+  method: string;
+  path: string;
+  errors: OperationError[];
+  results: OperationResponse[];
+  responseHeader: string | null;
 }

@@ -4,5 +4,5 @@
  * @param version
  */
 export const getInterfaceVersion = (version = '1.0'): string => {
-    return String(version).replace(/^v/gi, '');
+  return String(version).replace(/^v/gi, '');
 };

@@ -7,5 +7,5 @@ import RefParser from 'json-schema-ref-parser';
  * @param location: Path or url
  */
 export const getOpenApiSpec = async (location: string): Promise<any> => {
-    return await RefParser.bundle(location, location, {});
+  return await RefParser.bundle(location, location, {});
 };

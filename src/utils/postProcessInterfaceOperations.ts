@@ -1,26 +1,27 @@
+import { flatMap } from './flatMap';
 import type { Interface } from '../client/interfaces/Interface';
 import type { Operation } from '../client/interfaces/Operation';
-import { flatMap } from './flatMap';
 
 export const postProcessInterfaceOperations = (_interface: Interface): Operation[] => {
-    const names = new Map<string, number>();
+  const names = new Map<string, number>();
 
-    return _interface.operations.map(operation => {
-        const clone = { ...operation };
+  return _interface.operations.map((operation) => {
+    const clone = { ...operation };
 
-        // Parse the service parameters and results, very similar to how we parse
-        // properties of models. These methods will extend the type if needed.
-        clone.imports.push(...flatMap(clone.parameters, parameter => parameter.imports));
-        clone.imports.push(...flatMap(clone.results, result => result.imports));
+    // Parse the service parameters and results, very similar to how we parse
+    // properties of models. These methods will extend the type if needed.
+    clone.imports.push(...flatMap(clone.parameters, (parameter) => parameter.imports));
+    clone.imports.push(...flatMap(clone.results, (result) => result.imports));
 
-        // Check if the operation name is unique, if not then prefix this with a number
-        const name = clone.name;
-        const index = names.get(name) || 0;
-        if (index > 0) {
-            clone.name = `${name}${index}`;
-        }
-        names.set(name, index + 1);
+    // Check if the operation name is unique, if not then prefix this with a number
+    const { name } = clone;
+    const index = names.get(name) || 0;
 
-        return clone;
-    });
+    if (index > 0) {
+      clone.name = `${name}${index}`;
+    }
+    names.set(name, index + 1);
+
+    return clone;
+  });
 };

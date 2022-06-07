@@ -1,4 +1,4 @@
 export interface OperationError {
-    code: number;
-    description: string;
+  code: number;
+  description: string;
 }

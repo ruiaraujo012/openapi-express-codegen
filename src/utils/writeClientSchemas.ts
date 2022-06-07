@@ -1,10 +1,11 @@
+/* eslint-disable max-params */
 import { resolve } from 'path';
 
-import type { Model } from '../client/interfaces/Model';
-import type { Indent } from '../Indent';
-import { writeFile } from './fileSystem';
 import { formatCode as f } from './formatCode';
 import { formatIndentation as i } from './formatIndentation';
+import { writeFile } from './fileSystem';
+import type { Indent } from '../Indent';
+import type { Model } from '../client/interfaces/Model';
 import type { Templates } from './registerHandlebarTemplates';
 
 /**
@@ -16,18 +17,19 @@ import type { Templates } from './registerHandlebarTemplates';
  * @param indent Indentation options (4, 2 or tab)
  */
 export const writeClientSchemas = async (
-    models: Model[],
-    templates: Templates,
-    outputPath: string,
-    useUnionTypes: boolean,
-    indent: Indent
+  models: Model[],
+  templates: Templates,
+  outputPath: string,
+  useUnionTypes: boolean,
+  indent: Indent,
 ): Promise<void> => {
-    for (const model of models) {
-        const file = resolve(outputPath, `$${model.name}.ts`);
-        const templateResult = templates.exports.schema({
-            ...model,
-            useUnionTypes,
-        });
-        await writeFile(file, i(f(templateResult), indent));
-    }
+  for (const model of models) {
+    const file = resolve(outputPath, `$${model.name}.ts`);
+    const templateResult = templates.exports.schema({
+      ...model,
+      useUnionTypes,
+    });
+
+    await writeFile(file, i(f(templateResult), indent));
+  }
 };

@@ -1,108 +1,104 @@
-import type { Model } from '../../../client/interfaces/Model';
+import { escapeName } from './escapeName';
 import { findOneOfParentDiscriminator, mapPropertyValue } from '../../../utils/discriminator';
 import { getPattern } from '../../../utils/getPattern';
+import { getType } from './getType';
+import type { Model } from '../../../client/interfaces/Model';
 import type { OpenApi } from '../interfaces/OpenApi';
 import type { OpenApiSchema } from '../interfaces/OpenApiSchema';
-import { escapeName } from './escapeName';
 import type { getModel } from './getModel';
-import { getType } from './getType';
 
 // Fix for circular dependency
 export type GetModelFn = typeof getModel;
 
 export const getModelProperties = (
-    openApi: OpenApi,
-    definition: OpenApiSchema,
-    getModel: GetModelFn,
-    parent?: Model
+  openApi: OpenApi,
+  definition: OpenApiSchema,
+  getModel: GetModelFn,
+  parent?: Model,
 ): Model[] => {
-    const models: Model[] = [];
-    const discriminator = findOneOfParentDiscriminator(openApi, parent);
-    for (const propertyName in definition.properties) {
-        if (definition.properties.hasOwnProperty(propertyName)) {
-            const property = definition.properties[propertyName];
-            const propertyRequired = !!definition.required?.includes(propertyName);
-            const propertyValues: Omit<
-                Model,
-                | 'export'
-                | 'type'
-                | 'base'
-                | 'template'
-                | 'link'
-                | 'isNullable'
-                | 'imports'
-                | 'enum'
-                | 'enums'
-                | 'properties'
-            > = {
-                name: escapeName(propertyName),
-                description: property.description || null,
-                deprecated: property.deprecated === true,
-                isDefinition: false,
-                isReadOnly: property.readOnly === true,
-                isRequired: propertyRequired,
-                format: property.format,
-                maximum: property.maximum,
-                exclusiveMaximum: property.exclusiveMaximum,
-                minimum: property.minimum,
-                exclusiveMinimum: property.exclusiveMinimum,
-                multipleOf: property.multipleOf,
-                maxLength: property.maxLength,
-                minLength: property.minLength,
-                maxItems: property.maxItems,
-                minItems: property.minItems,
-                uniqueItems: property.uniqueItems,
-                maxProperties: property.maxProperties,
-                minProperties: property.minProperties,
-                pattern: getPattern(property.pattern),
-            };
-            if (parent && discriminator?.propertyName == propertyName) {
-                models.push({
-                    export: 'reference',
-                    type: 'string',
-                    base: `'${mapPropertyValue(discriminator, parent)}'`,
-                    template: null,
-                    isNullable: property.nullable === true,
-                    link: null,
-                    imports: [],
-                    enum: [],
-                    enums: [],
-                    properties: [],
-                    ...propertyValues,
-                });
-            } else if (property.$ref) {
-                const model = getType(property.$ref);
-                models.push({
-                    export: 'reference',
-                    type: model.type,
-                    base: model.base,
-                    template: model.template,
-                    link: null,
-                    isNullable: model.isNullable || property.nullable === true,
-                    imports: model.imports,
-                    enum: [],
-                    enums: [],
-                    properties: [],
-                    ...propertyValues,
-                });
-            } else {
-                const model = getModel(openApi, property);
-                models.push({
-                    export: model.export,
-                    type: model.type,
-                    base: model.base,
-                    template: model.template,
-                    link: model.link,
-                    isNullable: model.isNullable || property.nullable === true,
-                    imports: model.imports,
-                    enum: model.enum,
-                    enums: model.enums,
-                    properties: model.properties,
-                    ...propertyValues,
-                });
-            }
-        }
-    }
+  const models: Model[] = [];
+  const discriminator = findOneOfParentDiscriminator(openApi, parent);
 
-    return models;
+  for (const propertyName in definition.properties) {
+    if (definition.properties.hasOwnProperty(propertyName)) {
+      const property = definition.properties[propertyName];
+      const propertyRequired = !!definition.required?.includes(propertyName);
+      const propertyValues: Omit<
+        Model,
+        'export' | 'type' | 'base' | 'template' | 'link' | 'isNullable' | 'imports' | 'enum' | 'enums' | 'properties'
+      > = {
+        deprecated: property.deprecated === true,
+        description: property.description || null,
+        exclusiveMaximum: property.exclusiveMaximum,
+        exclusiveMinimum: property.exclusiveMinimum,
+        format: property.format,
+        isDefinition: false,
+        isReadOnly: property.readOnly === true,
+        isRequired: propertyRequired,
+        maxItems: property.maxItems,
+        maxLength: property.maxLength,
+        maxProperties: property.maxProperties,
+        maximum: property.maximum,
+        minItems: property.minItems,
+        minLength: property.minLength,
+        minProperties: property.minProperties,
+        minimum: property.minimum,
+        multipleOf: property.multipleOf,
+        name: escapeName(propertyName),
+        pattern: getPattern(property.pattern),
+        uniqueItems: property.uniqueItems,
+      };
+
+      // eslint-disable-next-line eqeqeq
+      if (parent && discriminator?.propertyName == propertyName) {
+        models.push({
+          base: `'${mapPropertyValue(discriminator, parent)}'`,
+          enum: [],
+          enums: [],
+          export: 'reference',
+          imports: [],
+          isNullable: property.nullable === true,
+          link: null,
+          properties: [],
+          template: null,
+          type: 'string',
+          ...propertyValues,
+        });
+      } else if (property.$ref) {
+        const model = getType(property.$ref);
+
+        models.push({
+          base: model.base,
+          enum: [],
+          enums: [],
+          export: 'reference',
+          imports: model.imports,
+          isNullable: model.isNullable || property.nullable === true,
+          link: null,
+          properties: [],
+          template: model.template,
+          type: model.type,
+          ...propertyValues,
+        });
+      } else {
+        const model = getModel(openApi, property);
+
+        models.push({
+          base: model.base,
+          enum: model.enum,
+          enums: model.enums,
+          export: model.export,
+          imports: model.imports,
+          isNullable: model.isNullable || property.nullable === true,
+          link: model.link,
+          properties: model.properties,
+          template: model.template,
+          type: model.type,
+          ...propertyValues,
+        });
+      }
+    }
+  }
+
+  return models;
 };

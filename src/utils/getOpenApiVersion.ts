@@ -1,6 +1,6 @@
 export enum OpenApiVersion {
-    V2 = 2,
-    V3 = 3,
+  V2 = 2,
+  V3 = 3,
 }
 
 /**
@@ -10,13 +10,15 @@ export enum OpenApiVersion {
  * @param openApi The loaded spec (can be any object)
  */
 export const getOpenApiVersion = (openApi: any): OpenApiVersion => {
-    const info: any = openApi.swagger || openApi.openapi;
-    if (typeof info === 'string') {
-        const c = info.charAt(0);
-        const v = Number.parseInt(c);
-        if (v === OpenApiVersion.V2 || v === OpenApiVersion.V3) {
-            return v as OpenApiVersion;
-        }
+  const info: any = openApi.swagger || openApi.openapi;
+
+  if (typeof info === 'string') {
+    const char = info.charAt(0);
+    const version = Number.parseInt(char, 10);
+
+    if (version === OpenApiVersion.V2 || version === OpenApiVersion.V3) {
+      return version as OpenApiVersion;
     }
-    throw new Error(`Unsupported Open API version: "${String(info)}"`);
+  }
+  throw new Error(`Unsupported Open API version: "${String(info)}"`);
 };

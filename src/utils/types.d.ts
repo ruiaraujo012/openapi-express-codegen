@@ -1,3 +1,3 @@
 export interface Dictionary<T = any> {
-    [key: string]: T;
+  [key: string]: T;
 }
