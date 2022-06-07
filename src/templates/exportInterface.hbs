@@ -1,0 +1,37 @@
+{{>header}}
+
+{{#if imports}}
+{{#each imports}}
+import type { {{{this}}} } from '../models/{{{this}}}';
+{{/each}}
+{{/if}}
+
+import { NextFunction, Request, Response } from 'express';
+import { ParsedQs } from 'qs';
+
+export interface {{{name}}}{{{@root.postfix}}} {
+	{{#each operations}}
+	/**
+	{{#if deprecated}}
+	 * @deprecated
+	{{/if}}
+	{{#if summary}}
+	 * {{{escapeComment summary}}}
+	{{/if}}
+	{{#if description}}
+	 * {{{escapeComment description}}}
+	{{/if}}
+	{{#if parameters}}
+	{{#each parameters}}
+	 * @param {{{name}}} {{#if description}}{{{escapeComment description}}}{{/if}}
+	{{/each}}
+	{{/if}}
+	{{#each results}}
+	 * @returns {{{type}}} {{#if description}}{{{escapeComment description}}}{{/if}}
+	{{/each}}
+	 * @throws ApiError
+	 */
+  {{{name}}}(req: Request<{ {{#each parameters}}{{#notEquals name 'requestBody'}}{{this.name}}: {{this.type}}; {{/notEquals}}{{/each}} }, any, {}{{#each parameters}}{{#equals name 'requestBody'}} | {{this.type}}{{/equals}}{{/each}}, ParsedQs, Record<string, any>>, res: Response, next: NextFunction): Promise<{{>result}}> 
+
+	{{/each}}
+}

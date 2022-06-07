@@ -1,0 +1,34 @@
+{{>header}}
+
+{{#if @root.exportModels}}
+{{#if models}}
+
+{{#each models}}
+{{#if @root.useUnionTypes}}
+export type { {{{name}}} } from './models/{{{name}}}';
+{{else if enum}}
+export { {{{name}}} } from './models/{{{name}}}';
+{{else if enums}}
+export { {{{name}}} } from './models/{{{name}}}';
+{{else}}
+export type { {{{name}}} } from './models/{{{name}}}';
+{{/if}}
+{{/each}}
+{{/if}}
+{{/if}}
+{{#if @root.exportSchemas}}
+{{#if models}}
+
+{{#each models}}
+export { ${{{name}}} } from './schemas/${{{name}}}';
+{{/each}}
+{{/if}}
+{{/if}}
+{{#if @root.exportInterfaces}}
+{{#if interfaces}}
+
+{{#each interfaces}}
+export { {{{name}}}{{{@root.postfix}}} } from './interfaces/{{{name}}}{{{@root.postfix}}}';
+{{/each}}
+{{/if}}
+{{/if}}
