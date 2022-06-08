@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.2...v1.0.3) (2022-06-08)
+
+
+### Bug Fixes
+
+* **deps:** rollback to camelcase dep version 6.x.x ([7658e41](https://github.com/ruiaraujo012/openapi-express-codegen/commit/7658e41f1f06f33c1219d029adc5d6c47ae20acc))
+
 ## [1.0.2](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.1...v1.0.2) (2022-06-08)
 
 
