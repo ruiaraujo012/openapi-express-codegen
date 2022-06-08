@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.1...v1.0.2) (2022-06-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency camelcase to v7 ([262f171](https://github.com/ruiaraujo012/openapi-express-codegen/commit/262f171fdeb72564f32e7f4b8ad0b3b33a987e6f))
+
 ## [1.0.1](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.0...v1.0.1) (2022-06-07)
 
 
