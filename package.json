@@ -48,7 +48,7 @@
         "semantic-release": "semantic-release"
     },
     "dependencies": {
-        "camelcase": "^7.0.0",
+        "camelcase": "6.3.0",
         "commander": "^9.3.0",
         "fs-extra": "^10.1.0",
         "handlebars": "^4.7.7",
