@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.4...v1.0.5) (2022-06-09)
+
+
+### Bug Fixes
+
+* **interface-schema:** change the Response and Promise type of the interface ([e8db3d6](https://github.com/ruiaraujo012/openapi-express-codegen/commit/e8db3d6bb542669052689b9781acbec667d106d0))
+
 ## [1.0.4](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.3...v1.0.4) (2022-06-09)
 
 
