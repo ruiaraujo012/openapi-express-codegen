@@ -31,7 +31,7 @@ export interface {{{name}}}{{{@root.postfix}}} {
 	{{/each}}
 	 * @throws ApiError
 	 */
-  {{{name}}}(req: Request<{ {{#each parameters}}{{#notEquals name 'requestBody'}}{{this.name}}: {{this.type}}; {{/notEquals}}{{/each}} }, any, {}{{#each parameters}}{{#equals name 'requestBody'}} & {{this.type}}{{/equals}}{{/each}}, ParsedQs, Record<string, any>>, res: Response, next: NextFunction): Promise<{{>result}}> 
+  {{{name}}}(req: Request<{ {{#each parameters}}{{#notEquals name 'requestBody'}}{{this.name}}: {{this.type}}; {{/notEquals}}{{/each}} }, unknown, {}{{#each parameters}}{{#equals name 'requestBody'}} & {{this.type}}{{/equals}}{{/each}}, ParsedQs, Record<string, unknown>>, res: Response<{{>result}}, Record<string, unknown>>, next: NextFunction): Promise<unknown> 
 
 	{{/each}}
 }
