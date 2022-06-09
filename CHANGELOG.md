@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.3...v1.0.4) (2022-06-09)
+
+
+### Bug Fixes
+
+* **interface-schema:** fix the interface schema ([3debdc4](https://github.com/ruiaraujo012/openapi-express-codegen/commit/3debdc4dbc470405df5e33d74d602ed3f3587b9c))
+
 ## [1.0.3](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.2...v1.0.3) (2022-06-08)
 
 
