@@ -8,3 +8,4 @@ junit.xml
 .idea
 .vscode
 *.iml
+build/*
