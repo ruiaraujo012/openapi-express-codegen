@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.5...v1.0.6) (2022-06-20)
+
+
+### Bug Fixes
+
+* **generator:** fix an incorrect generated request typing ([623d717](https://github.com/ruiaraujo012/openapi-express-codegen/commit/623d71723762524c6186fe4470bfa94a96a4dbc2))
+
 ## [1.0.5](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.4...v1.0.5) (2022-06-09)
 
 
