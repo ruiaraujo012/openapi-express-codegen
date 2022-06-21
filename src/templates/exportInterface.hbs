@@ -23,7 +23,7 @@ export interface {{{name}}}{{{@root.postfix}}} {
 	{{/if}}
 	{{#if parameters}}
 	{{#each parameters}}
-	 * @param {{{name}}} {{#if description}}{{{escapeComment description}}}{{/if}}
+	 * @param {{{name}}}{{#if description}} {{{escapeComment description}}}{{/if}}{{#if isRequired}} (Required){{/if}}
 	{{/each}}
 	{{/if}}
 	{{#each results}}
@@ -31,7 +31,8 @@ export interface {{{name}}}{{{@root.postfix}}} {
 	{{/each}}
 	 * @throws ApiError
 	 */
-  {{{name}}}(req: Request<{ {{#each parameters}}{{#equals in 'path'}}{{this.name}}: {{this.type}}; {{/equals}}{{/each}} }, unknown, {}{{#each parameters}}{{#equals in 'body'}} & {{this.type}} {{/equals}}{{/each}}, { {{#each parameters}}{{#equals in 'query'}} {{this.name}}: {{this.type}}; {{/equals}}{{/each}} } & ParsedQs, Record<string, unknown>>, res: Response<{{>result}}, Record<string, unknown>>, next: NextFunction): Promise<unknown> 
+
+  {{{name}}}(req: Request<{ {{#each parameters}}{{#equals in 'path'}}{{this.name}}{{#equals isRequired false }}?{{/equals}}: {{this.type}}; {{/equals}}{{/each}} }, unknown, {}{{#each parameters}}{{#equals in 'body'}} & {{this.type}} {{/equals}}{{/each}}, { {{#each parameters}}{{#equals in 'query'}} {{this.name}}{{#equals isRequired false }}?{{/equals}}: {{this.type}}; {{/equals}}{{/each}} } & ParsedQs, Record<string, unknown>>, res: Response<{{>result}}, Record<string, unknown>>, next: NextFunction): Promise<unknown> 
 
 	{{/each}}
 }
