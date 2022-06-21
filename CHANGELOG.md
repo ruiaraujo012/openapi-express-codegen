@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.6...v1.0.7) (2022-06-21)
+
+
+### Bug Fixes
+
+* **templates:** fix missing optional parameters ([826e24a](https://github.com/ruiaraujo012/openapi-express-codegen/commit/826e24a590c5a31eb91a2c30092805f07f793143))
+
 ## [1.0.6](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.5...v1.0.6) (2022-06-20)
 
 
