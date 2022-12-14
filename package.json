@@ -69,7 +69,7 @@
         "@semantic-release/npm": "9.0.1",
         "@semantic-release/release-notes-generator": "10.0.3",
         "@types/cross-spawn": "6.0.2",
-        "@types/express": "4.17.14",
+        "@types/express": "4.17.15",
         "@types/fs-extra": "9.0.13",
         "@types/glob": "8.0.0",
         "@types/node": "18.11.15",
