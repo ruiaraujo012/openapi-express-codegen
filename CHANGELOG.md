@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.7...v1.0.8) (2023-03-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency commander to v9.5.0 ([5d2b155](https://github.com/ruiaraujo012/openapi-express-codegen/commit/5d2b1558e2ee8cfc43b9edb3328fbdd0e281960d))
+
 ## [1.0.7](https://github.com/ruiaraujo012/openapi-express-codegen/compare/v1.0.6...v1.0.7) (2022-06-21)
 
 

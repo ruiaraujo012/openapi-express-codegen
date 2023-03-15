@@ -1,6 +1,6 @@
 {
     "name": "openapi-express-codegen",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "Library that generates express Typescript types based on the OpenAPI specification.",
     "author": "Rui Araújo",
     "homepage": "https://github.com/ruiaraujo012/openapi-express-codegen",
