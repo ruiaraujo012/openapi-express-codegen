@@ -55,10 +55,10 @@
         "json-schema-ref-parser": "^9.0.9"
     },
     "devDependencies": {
-        "@babel/cli": "7.21.0",
-        "@babel/core": "7.21.3",
-        "@babel/preset-env": "7.20.2",
-        "@babel/preset-typescript": "7.21.0",
+        "@babel/cli": "7.23.9",
+        "@babel/core": "7.23.9",
+        "@babel/preset-env": "7.23.9",
+        "@babel/preset-typescript": "7.23.3",
         "@rollup/plugin-commonjs": "22.0.2",
         "@rollup/plugin-node-resolve": "13.3.0",
         "@rollup/plugin-typescript": "8.5.0",
